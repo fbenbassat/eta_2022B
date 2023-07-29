@@ -16,6 +16,10 @@ class ProductsPage(PageObject):
     class_add_to_cart_btn = 'btn_primary'
     class_cart_badge = 'shopping_cart_badge'
     class_cart_btn = 'shopping_cart_link'
+    class_product_name = 'inventory_item_name'
+    class_remove_btn = 'btn_secondary'
+    text_remove_btn = 'Remove'
+    text_add_to_cart_btn = 'Add to cart'
 
     def __init__(self, driver):
         super(ProductsPage, self).__init__(driver=driver)
@@ -40,7 +44,14 @@ class ProductsPage(PageObject):
         product_list = self.driver.find_elements(By.CLASS_NAME, self.class_product_card)
         random_product = randint(0, len(product_list) - 1)
         product_element = product_list[random_product]
+        add_to_cart_text = product_element.find_element(By.CLASS_NAME, self.class_add_to_cart_btn).text
+        if add_to_cart_text != self.text_add_to_cart_btn:
+            raise Exception('Add to cart button not found!')
         product_element.find_element(By.CLASS_NAME, self.class_add_to_cart_btn).click()
+        button_remove_text = product_element.find_element(By.CLASS_NAME, self.class_remove_btn).text
+        if button_remove_text != self.text_remove_btn:
+            raise Exception('Remove button not found!')
+        return product_element.find_element(By.CLASS_NAME, self.class_product_name).text
 
     def get_cart_badge_number(self):
         return int(self.driver.find_element(By.CLASS_NAME, self.class_cart_badge).text)

@@ -10,6 +10,9 @@ class CheckoutYourInfoPage(PageObject):
     css_continue_btn = '[name="continue"]'
     text_first_name_required = 'Error: First Name is required'
     css_error_message = '[data-test="error"]'
+    css_name_field = '[name="firstName"]'
+    css_last_name_field = '[name="lastName"]'
+    css_zip_code = '[name="postalCode"]'
 
     def __init__(self, driver):
         super(CheckoutYourInfoPage, self).__init__(driver=driver)
@@ -23,3 +26,9 @@ class CheckoutYourInfoPage(PageObject):
     def has_first_name_required_error_message(self):
         error_text = self.driver.find_element(By.CSS_SELECTOR, self.css_error_message).text
         return error_text == self.text_first_name_required
+
+    def fill_your_information(self, name='João', last_name='da Silva', zip_code='123456'):
+        self.driver.find_element(By.CSS_SELECTOR, self.css_name_field).send_keys(name)
+        self.driver.find_element(By.CSS_SELECTOR, self.css_last_name_field).send_keys(last_name)
+        self.driver.find_element(By.CSS_SELECTOR, self.css_zip_code).send_keys(zip_code)
+

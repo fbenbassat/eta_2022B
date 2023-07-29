@@ -38,7 +38,7 @@ def login_saucedemo(setup):
 @pytest.fixture
 def has_product_in_cart(login_saucedemo):
     product_p = ProductsPage(driver=login_saucedemo.driver)
-    product_p.add_random_product_to_cart()
+    product_name = product_p.add_random_product_to_cart()
     assert product_p.get_cart_badge_number() == 1, 'Quantidade de produtos no carrinho está incorreta!'
-    yield product_p
+    yield product_p, product_name
 
