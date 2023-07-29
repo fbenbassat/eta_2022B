@@ -15,7 +15,7 @@ def select_browser(request):
     yield request.config.getoption("--select_browser").lower()
 
 
-@pytest.fixture
+@pytest.fixture()
 def setup(select_browser):
     login_page = LoginPage(browser=select_browser)
     yield login_page
